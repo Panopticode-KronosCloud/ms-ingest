@@ -122,7 +122,7 @@ testing {
 				implementation project(':test-common')
 				implementation 'org.springframework.boot:spring-boot-starter-test'
 				implementation 'org.springframework.boot:spring-boot-testcontainers'
-				implementation 'org.springframework:spring-tx:6.2.3'
+				implementation 'org.springframework:spring-tx:7.0.1'
 				implementation 'org.testcontainers:junit-jupiter:1.20.5'
 				implementation 'org.testcontainers:postgresql:1.20.5'
 				implementation "org.jooq:jooq:$jooqVersion"
