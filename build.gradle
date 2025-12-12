@@ -3,7 +3,7 @@ import org.openapitools.generator.gradle.plugin.tasks.GenerateTask
 
 buildscript {
 	ext {
-		springVersion    = '3.4.3'
+		springVersion    = '4.0.0'
 		mapStructVersion = '1.6.3'
 	}
 }
