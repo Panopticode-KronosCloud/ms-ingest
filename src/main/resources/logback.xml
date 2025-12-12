@@ -8,7 +8,5 @@
     </root>
 
     <logger name="org.springframework.web" level="INFO"/>
-    <logger name="com.panopticode.example" level="INFO"/>
-
-    <logger name="com.panopticode.example.controller.CookbookController" level="DEBUG"/>
+    <logger name="com.panopticode.ingest" level="INFO"/>
 </configuration>

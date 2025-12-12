@@ -1,0 +1,33 @@
+post:
+  description: Create an empty folder
+  summary: Create an empty folder
+  tags:
+    - ingest
+  operationId: createNewFolder
+  requestBody:
+    $ref: ../components/requestBodies/CreateNewFolder.yaml
+  responses:
+    '201':
+      description: Folder successfully created
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/EntryResponse.yaml
+    '400':
+      description: Folder already exists
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/ErrorModel.yaml
+    '404':
+      description: Parent not found
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/ErrorModel.yaml
+    default:
+      description: Unexpected error
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/ErrorModel.yaml

@@ -1,0 +1,27 @@
+patch:
+  summary: Move or rename an entry (file or folder)
+  tags:
+    - ingest
+  operationId: moveEntry
+  parameters:
+    - in: path
+      name: entryId
+      required: true
+      schema:
+        type: string
+        format: uuid
+  requestBody:
+    $ref: ../components/requestBodies/MoveEntry.yaml
+  responses:
+    '200':
+      description: Entry successfully moved/renamed
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/EntryResponse.yaml
+    '404':
+      description: Invalid parent id
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/ErrorModel.yaml

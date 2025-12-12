@@ -8,8 +8,6 @@ For further reference, please consider the following sections:
 * [Create an OCI image](https://docs.spring.io/spring-boot/docs/3.2.2/gradle-plugin/reference/html/#build-image)
 * [Docker Compose Support](https://docs.spring.io/spring-boot/docs/3.2.2/reference/htmlsingle/index.html#features.docker-compose)
 * [Spring Web](https://docs.spring.io/spring-boot/docs/3.2.2/reference/htmlsingle/index.html#web)
-* [JDBC API](https://docs.spring.io/spring-boot/docs/3.2.2/reference/htmlsingle/index.html#data.sql)
-* [JOOQ Access Layer](https://docs.spring.io/spring-boot/docs/3.2.2/reference/htmlsingle/index.html#data.sql.jooq)
 
 ### Guides
 The following guides illustrate how to use some features concretely:
@@ -30,7 +28,6 @@ This project contains a Docker Compose file named `compose.yaml`.
 In this file, the following services have been defined:
 
 * webapp: the microservice built from source
-* postgres: [`postgres:17.4-alpine3.21`](https://hub.docker.com/_/postgres)
 
 Please review the tags of the used images and set them to the same as you're running in production.
 

@@ -1,0 +1,28 @@
+delete:
+  description: Delete a file or directory, if it exists
+  summary: Delete a file or directory
+  tags:
+    - ingest
+  operationId: deleteEntry
+  parameters:
+    - in: path
+      name: entryId
+      required: true
+      schema:
+        type: string
+        format: uuid
+  responses:
+    '204':
+      description: Deletion completed successfully
+    '404':
+      description: Invalid entry id
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/ErrorModel.yaml
+    default:
+      description: Unexpected error
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/ErrorModel.yaml

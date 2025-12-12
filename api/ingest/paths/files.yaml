@@ -1,0 +1,36 @@
+post:
+  summary: Upload or update a file
+  description: >
+    Upload a new file. If override=true, an existing file with the same parent
+    and name will be replaced.
+  tags:
+    - ingest
+  operationId: upsertFile
+  parameters:
+    - in: query
+      name: override
+      required: false
+      schema:
+        type: boolean
+        default: false
+  requestBody:
+    $ref: ../components/requestBodies/UpsertFileRequest.yaml
+  responses:
+    '201':
+      description: Change successfully queued
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/EntryResponse.yaml
+    '405':
+      description: Invalid input
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/ErrorModel.yaml
+    default:
+      description: Unexpected error
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/ErrorModel.yaml

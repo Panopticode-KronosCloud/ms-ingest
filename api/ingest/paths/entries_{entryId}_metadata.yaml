@@ -1,0 +1,40 @@
+patch:
+  description: Update metadata for an entry (file or folder)
+  summary: Update metadata for an entry
+  tags:
+    - ingest
+  operationId: updateEntryMetadata
+  parameters:
+    - in: path
+      name: entryId
+      required: true
+      schema:
+        type: string
+        format: uuid
+  requestBody:
+    $ref: ../components/requestBodies/UpdateMetadata.yaml
+  responses:
+    '200':
+      description: Metadata successfully updated
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/EntryResponse.yaml
+    '400':
+      description: Invalid ID supplied
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/ErrorModel.yaml
+    '404':
+      description: Entry not found
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/ErrorModel.yaml
+    default:
+      description: Unexpected error
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/ErrorModel.yaml

@@ -1,33 +1,8 @@
-# Java Spring Boot micro-service template
+# Ingest microservice
 
-A template code base for a java Spring Boot micro-service, with database versioning, a RESTful API defined and documented
-using OpenAPI and a compelling test suite.
+A microservice with a REST API responsible for uploading data
 
 ## Development resources
-
-### DB migration
-
-This project uses Flyway to handle DB migration, just add a versioned SQL file (e.g. `V2.3__add_my_table.sql`)
-and Flyway will take care of applying the changes during startup.
-
-### Re/generate DB entities with jOOQ
-
-The jOOQ generator can be hooked up with Flyway and generate entities based on the diff, but I haven't
-investigated that. Right now jOOQ needs to connect to a running DB instance to reverse engineer the
-tables. First thing then is to run the Postgres DB on Docker
-
-```shell
-./gradlew bootRun
-# or
-docker-compose up
-```
-
-then, in a different terminal,
-
-```shell
-rm -rf ./src/main/java/generated/com/panopticode/jooq
-./gradlew jooqCodegen
-```
 
 ### API
 

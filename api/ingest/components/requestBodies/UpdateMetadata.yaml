@@ -1,0 +1,12 @@
+description: Update an entry with an arbitrary metadata object
+required: true
+content:
+  application/json:
+    schema:
+      type: object
+      properties:
+        metadata:
+          type: object
+          description: Arbitrary metadata object
+      required:
+        - metadata

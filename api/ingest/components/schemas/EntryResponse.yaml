@@ -1,0 +1,32 @@
+description: Entry object
+type: object
+properties:
+  id:
+    type: string
+    format: uuid
+  name:
+    type: string
+  parent_id:
+    type: string
+    format: uuid
+    nullable: true
+  type:
+    type: string
+    enum:
+      - file
+      - directory
+  size:
+    type: integer
+    nullable: true
+  media_type:
+    type: string
+    nullable: true
+  metadata:
+    type: object
+    nullable: true
+  created:
+    type: string
+    format: date-time
+  last_modified:
+    type: string
+    format: date-time

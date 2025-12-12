@@ -1,0 +1,22 @@
+description: Data object to upsert a file
+required: true
+content:
+  multipart/form-data:
+    schema:
+      type: object
+      properties:
+        file:
+          type: string
+          format: binary
+        parent_id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        metadata:
+          type: string
+          description: JSON string for file metadata
+      required:
+        - file
+        - parent_id
+        - name

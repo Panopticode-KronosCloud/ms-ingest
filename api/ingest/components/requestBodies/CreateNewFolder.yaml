@@ -1,0 +1,15 @@
+description: Request object to create a new folder
+required: true
+content:
+  application/json:
+    schema:
+      type: object
+      properties:
+        parent_id:
+          type: string
+          format: uuid
+        name:
+          type: string
+      required:
+        - parent_id
+        - name

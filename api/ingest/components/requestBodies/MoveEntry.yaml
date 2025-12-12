@@ -1,0 +1,14 @@
+description: Data object to move an entry (file or folder)
+required: true
+content:
+  application/json:
+    schema:
+      type: object
+      properties:
+        new_parent_id:
+          type: string
+          format: uuid
+        new_name:
+          type: string
+      required:
+        - new_parent_id
