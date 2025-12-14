@@ -90,6 +90,7 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           platforms: linux/amd64,linux/arm64
+          outputs: type=image,name=target,annotation-index.org.opencontainers.image.description=Kronos Ingest microservice
 
       # This step generates an artifact attestation for the image, which is an unforgeable statement about where and
       # how it was built. It increases supply chain security for people who consume the image. For more information,
