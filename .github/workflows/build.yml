@@ -58,7 +58,7 @@ jobs:
         uses: gradle/actions/setup-gradle@v5
 
       - name: Build with Gradle Wrapper
-        run: ./gradlew jar
+        run: ./gradlew bootJar
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
