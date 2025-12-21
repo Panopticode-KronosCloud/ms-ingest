@@ -54,16 +54,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-#      - name: Checkout repository
-#        uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v5
 
       - name: Setup Node (for Redocly)
         uses: actions/setup-node@v6
         with:
           node-version: 24
-
-#      - name: Install Redocly CLI
-#        run: npm install -g @redocly/cli
 
       - name: Bundle OpenAPI spec
         run: |
