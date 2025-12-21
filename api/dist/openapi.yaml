@@ -1,6 +1,6 @@
 openapi: 3.0.3
 info:
-  title: ingest-microservices
+  title: ingest-microservice
   description: |-
     ingest-microservice
     This is the public API to interact with your webapp, based on the OpenAPI 3.0 specification.
@@ -47,7 +47,7 @@ paths:
           required: false
           schema:
             type: boolean
-            default: true
+            default: false
       requestBody:
         $ref: '#/components/requestBodies/UpsertFileRequest'
       responses:
