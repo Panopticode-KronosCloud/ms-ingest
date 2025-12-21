@@ -205,23 +205,10 @@ tasks.register('bundleApiSpecs', Exec) {
 			'-o', 'dist/openapi.yaml'
 
 	outputs.file(layout.projectDirectory.file('api/dist/openapi.yaml'))
-
-//	doLast {
-//		println "Copying bundled API specs to build directory..."
-//
-//		copy {
-//			from layout.projectDirectory.file('api/bundled.yaml')
-//			into layout.buildDirectory.dir('openapi')
-//
-//			rename 'bundled', 'openapi'
-//		}
-//
-//		delete "${rootDir}/api/bundled.yaml"
-//	}
 }
 
 // This task is an internal utility and it's not polished
-// it reads the specs at api/openapi.yaml and create the documents
+// it reads the specs at api/ingest/openapi.yaml and create the documents
 // inside api/ingest/. The openapi.yaml rooted there needs to be
 // moved where the original was and all the $refs fixed.
 tasks.register('splitApiSpecs', Exec) {
@@ -232,8 +219,18 @@ tasks.register('splitApiSpecs', Exec) {
 			'-v', "$projectDir/api:/spec",
 			'redocly/cli:2.12.6',
 			'split',
-			'openapi.yaml',
-			'--outDir', './ingest'
+			'dist/openapi.yaml',
+			'--outDir', 'src/ingest'
+}
+
+tasks.register('checkOpenApiContract', Exec) {
+    mkdir 'build/openApiCheck'
+
+    commandLine 'scripts/openapi-check.sh'
+}
+
+tasks.named('check') {
+    dependsOn(checkOpenApiContract)
 }
 
 openApiValidate {
