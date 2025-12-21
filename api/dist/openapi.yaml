@@ -1,0 +1,317 @@
+openapi: 3.0.3
+info:
+  title: ingest-microservice
+  description: |-
+    ingest-microservice
+    This is the public API to interact with your webapp, based on the OpenAPI 3.0 specification.
+  termsOfService: https://twitter.com/en/tos
+  contact:
+    name: API Support
+    url: https://www.begambleaware.org/
+    email: sink@etlgr.com
+  license:
+    name: GPL 3.0
+    url: https://www.gnu.org/licenses/gpl-3.0.en.html
+  version: 1.0.0
+servers:
+  - url: http://localhost:{port}/api/v1/ingest
+    description: Local development container
+    variables:
+      port:
+        enum:
+          - '8080'
+        default: '8080'
+  - url: https://raspberrypi.tigon-court.ts.net/api/v1/ingest
+    description: Production server
+tags:
+  - name: ingest
+    description: Write API for data
+    externalDocs:
+      description: Find out more
+      url: https://neal.fun
+externalDocs:
+  description: Find out more about Swagger
+  url: http://swagger.io
+paths:
+  /files:
+    post:
+      summary: Upload or update a file
+      description: |
+        Upload a new file. If override=true, an existing file with the same parent and name will be replaced.
+      tags:
+        - ingest
+      operationId: upsertFile
+      parameters:
+        - in: query
+          name: override
+          required: false
+          schema:
+            type: boolean
+            default: false
+      requestBody:
+        $ref: '#/components/requestBodies/UpsertFileRequest'
+      responses:
+        '201':
+          description: Change successfully queued
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EntryResponse'
+        '405':
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModel'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModel'
+  /folders:
+    post:
+      description: Create an empty folder
+      summary: Create an empty folder
+      tags:
+        - ingest
+      operationId: createNewFolder
+      requestBody:
+        $ref: '#/components/requestBodies/CreateNewFolder'
+      responses:
+        '201':
+          description: Folder successfully created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EntryResponse'
+        '400':
+          description: Folder already exists
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModel'
+        '404':
+          description: Parent not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModel'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModel'
+  /entries/{entryId}:
+    delete:
+      description: Delete a file or directory, if it exists
+      summary: Delete a file or directory
+      tags:
+        - ingest
+      operationId: deleteEntry
+      parameters:
+        - in: path
+          name: entryId
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '204':
+          description: Deletion completed successfully
+        '404':
+          description: Invalid entry id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModel'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModel'
+  /entries/{entryId}/move:
+    patch:
+      summary: Move or rename an entry (file or folder)
+      tags:
+        - ingest
+      operationId: moveEntry
+      parameters:
+        - in: path
+          name: entryId
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        $ref: '#/components/requestBodies/MoveEntry'
+      responses:
+        '200':
+          description: Entry successfully moved/renamed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EntryResponse'
+        '404':
+          description: Invalid parent id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModel'
+  /entries/{entryId}/metadata:
+    patch:
+      description: Update metadata for an entry (file or folder)
+      summary: Update metadata for an entry
+      tags:
+        - ingest
+      operationId: updateEntryMetadata
+      parameters:
+        - in: path
+          name: entryId
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        $ref: '#/components/requestBodies/UpdateMetadata'
+      responses:
+        '200':
+          description: Metadata successfully updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EntryResponse'
+        '400':
+          description: Invalid ID supplied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModel'
+        '404':
+          description: Entry not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModel'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModel'
+components:
+  requestBodies:
+    UpsertFileRequest:
+      description: Data object to upsert a file
+      required: true
+      content:
+        multipart/form-data:
+          schema:
+            type: object
+            properties:
+              file:
+                type: string
+                format: binary
+              parent_id:
+                type: string
+                format: uuid
+              name:
+                type: string
+              metadata:
+                type: string
+                description: JSON string for file metadata
+            required:
+              - file
+              - parent_id
+              - name
+    CreateNewFolder:
+      description: Request object to create a new folder
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              parent_id:
+                type: string
+                format: uuid
+              name:
+                type: string
+            required:
+              - parent_id
+              - name
+    MoveEntry:
+      description: Data object to move an entry (file or folder)
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              new_parent_id:
+                type: string
+                format: uuid
+              new_name:
+                type: string
+            required:
+              - new_parent_id
+    UpdateMetadata:
+      description: Update an entry with an arbitrary metadata object
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              metadata:
+                type: object
+                description: Arbitrary metadata object
+            required:
+              - metadata
+  schemas:
+    ErrorModel:
+      description: Generic error
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+        message:
+          type: string
+    EntryResponse:
+      description: Entry object
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        parent_id:
+          type: string
+          format: uuid
+          nullable: true
+        type:
+          type: string
+          enum:
+            - file
+            - directory
+        size:
+          type: integer
+          nullable: true
+        media_type:
+          type: string
+          nullable: true
+        metadata:
+          type: object
+          nullable: true
+        created:
+          type: string
+          format: date-time
+        last_modified:
+          type: string
+          format: date-time
