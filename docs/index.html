@@ -878,6 +878,7 @@ ul.nav-tabs {
     },
     "size" : {
       "type" : "integer",
+      "format" : "int64",
       "nullable" : true
     },
     "media_type" : {
@@ -1031,7 +1032,7 @@ This is the public API to interact with your webapp, based on the OpenAPI 3.0 sp
                             <pre class="prettyprint"><code class="language-bsh">curl -X POST \
  -H "Accept: application/json" \
  -H "Content-Type: application/json" \
- "http://localhost:8081/api/v1/ingest/folders" \
+ "http://localhost:8080/api/v1/ingest/folders" \
  -d ''
 </code></pre>
                           </div>
@@ -1648,7 +1649,7 @@ $(document).ready(function() {
                           <div class="tab-pane active" id="examples-Ingest-deleteEntry-0-curl">
                             <pre class="prettyprint"><code class="language-bsh">curl -X DELETE \
  -H "Accept: application/json" \
- "http://localhost:8081/api/v1/ingest/entries/{entryId}"
+ "http://localhost:8080/api/v1/ingest/entries/{entryId}"
 </code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Ingest-deleteEntry-0-java">
@@ -2149,7 +2150,7 @@ pub fn main() {
                             <pre class="prettyprint"><code class="language-bsh">curl -X PATCH \
  -H "Accept: application/json" \
  -H "Content-Type: application/json" \
- "http://localhost:8081/api/v1/ingest/entries/{entryId}/move" \
+ "http://localhost:8080/api/v1/ingest/entries/{entryId}/move" \
  -d ''
 </code></pre>
                           </div>
@@ -2656,7 +2657,7 @@ $(document).ready(function() {
                             <pre class="prettyprint"><code class="language-bsh">curl -X PATCH \
  -H "Accept: application/json" \
  -H "Content-Type: application/json" \
- "http://localhost:8081/api/v1/ingest/entries/{entryId}/metadata" \
+ "http://localhost:8080/api/v1/ingest/entries/{entryId}/metadata" \
  -d ''
 </code></pre>
                           </div>
@@ -3316,7 +3317,7 @@ $(document).ready(function() {
                             <pre class="prettyprint"><code class="language-bsh">curl -X POST \
  -H "Accept: application/json" \
  -H "Content-Type: multipart/form-data" \
- "http://localhost:8081/api/v1/ingest/files?override=true"
+ "http://localhost:8080/api/v1/ingest/files?override=true"
 </code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Ingest-upsertFile-0-java">
@@ -3334,13 +3335,16 @@ public class IngestApiExample {
         // Create an instance of the API class
         IngestApi apiInstance = new IngestApi();
         File file = BINARY_DATA_HERE; // File | 
-        UUID parentId = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // UUID | 
         String name = name_example; // String | 
         Boolean override = true; // Boolean | 
-        String metadata = metadata_example; // String | JSON string for file metadata
+        Date created = 2013-10-20T19:20:30+01:00; // Date | Optionally pass the created date. If not provided, will be set at time of upload
+        Date lastModified = 2013-10-20T19:20:30+01:00; // Date | Optionally pass the last modified date. If not provided, will be set at time of upload
+        UUID parentId = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // UUID | the id of the parent folder, or null for root
+        map[String, oas_any_type_not_mapped] metadata = Object; // map[String, oas_any_type_not_mapped] | Arbitrary JSON metadata for the file
+        Boolean rawAccess = true; // Boolean | Whether or not to allow this file to be accessible from the Web; defaults to false
 
         try {
-            EntryResponse result = apiInstance.upsertFile(file, parentId, name, override, metadata);
+            EntryResponse result = apiInstance.upsertFile(file, name, override, created, lastModified, parentId, metadata, rawAccess);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling IngestApi#upsertFile");
@@ -3357,13 +3361,16 @@ public class IngestApiExample {
 final api_instance = DefaultApi();
 
 final File file = new File(); // File | 
-final UUID parentId = new UUID(); // UUID | 
 final String name = new String(); // String | 
 final Boolean override = new Boolean(); // Boolean | 
-final String metadata = new String(); // String | JSON string for file metadata
+final Date created = new Date(); // Date | Optionally pass the created date. If not provided, will be set at time of upload
+final Date lastModified = new Date(); // Date | Optionally pass the last modified date. If not provided, will be set at time of upload
+final UUID parentId = new UUID(); // UUID | the id of the parent folder, or null for root
+final map[String, oas_any_type_not_mapped] metadata = new map[String, oas_any_type_not_mapped](); // map[String, oas_any_type_not_mapped] | Arbitrary JSON metadata for the file
+final Boolean rawAccess = new Boolean(); // Boolean | Whether or not to allow this file to be accessible from the Web; defaults to false
 
 try {
-    final result = await api_instance.upsertFile(file, parentId, name, override, metadata);
+    final result = await api_instance.upsertFile(file, name, override, created, lastModified, parentId, metadata, rawAccess);
     print(result);
 } catch (e) {
     print('Exception when calling DefaultApi->upsertFile: $e\n');
@@ -3379,13 +3386,16 @@ public class IngestApiExample {
     public static void main(String[] args) {
         IngestApi apiInstance = new IngestApi();
         File file = BINARY_DATA_HERE; // File | 
-        UUID parentId = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // UUID | 
         String name = name_example; // String | 
         Boolean override = true; // Boolean | 
-        String metadata = metadata_example; // String | JSON string for file metadata
+        Date created = 2013-10-20T19:20:30+01:00; // Date | Optionally pass the created date. If not provided, will be set at time of upload
+        Date lastModified = 2013-10-20T19:20:30+01:00; // Date | Optionally pass the last modified date. If not provided, will be set at time of upload
+        UUID parentId = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // UUID | the id of the parent folder, or null for root
+        map[String, oas_any_type_not_mapped] metadata = Object; // map[String, oas_any_type_not_mapped] | Arbitrary JSON metadata for the file
+        Boolean rawAccess = true; // Boolean | Whether or not to allow this file to be accessible from the Web; defaults to false
 
         try {
-            EntryResponse result = apiInstance.upsertFile(file, parentId, name, override, metadata);
+            EntryResponse result = apiInstance.upsertFile(file, name, override, created, lastModified, parentId, metadata, rawAccess);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling IngestApi#upsertFile");
@@ -3404,17 +3414,23 @@ public class IngestApiExample {
 // Create an instance of the API class
 IngestApi *apiInstance = [[IngestApi alloc] init];
 File *file = BINARY_DATA_HERE; //  (default to null)
-UUID *parentId = 38400000-8cf0-11bd-b23e-10b96e4ef00d; //  (default to null)
 String *name = name_example; //  (default to null)
 Boolean *override = true; //  (optional) (default to false)
-String *metadata = metadata_example; // JSON string for file metadata (optional) (default to null)
+Date *created = 2013-10-20T19:20:30+01:00; // Optionally pass the created date. If not provided, will be set at time of upload (optional) (default to null)
+Date *lastModified = 2013-10-20T19:20:30+01:00; // Optionally pass the last modified date. If not provided, will be set at time of upload (optional) (default to null)
+UUID *parentId = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // the id of the parent folder, or null for root (optional) (default to null)
+map[String, oas_any_type_not_mapped] *metadata = Object; // Arbitrary JSON metadata for the file (optional) (default to null)
+Boolean *rawAccess = true; // Whether or not to allow this file to be accessible from the Web; defaults to false (optional) (default to false)
 
 // Upload or update a file
 [apiInstance upsertFileWith:file
-    parentId:parentId
     name:name
     override:override
+    created:created
+    lastModified:lastModified
+    parentId:parentId
     metadata:metadata
+    rawAccess:rawAccess
               completionHandler: ^(EntryResponse output, NSError* error) {
     if (output) {
         NSLog(@"%@", output);
@@ -3432,11 +3448,14 @@ String *metadata = metadata_example; // JSON string for file metadata (optional)
 // Create an instance of the API class
 var api = new IngestMicroservice.IngestApi()
 var file = BINARY_DATA_HERE; // {File} 
-var parentId = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // {UUID} 
 var name = name_example; // {String} 
 var opts = {
   'override': true, // {Boolean} 
-  'metadata': metadata_example // {String} JSON string for file metadata
+  'created': 2013-10-20T19:20:30+01:00, // {Date} Optionally pass the created date. If not provided, will be set at time of upload
+  'lastModified': 2013-10-20T19:20:30+01:00, // {Date} Optionally pass the last modified date. If not provided, will be set at time of upload
+  'parentId': 38400000-8cf0-11bd-b23e-10b96e4ef00d, // {UUID} the id of the parent folder, or null for root
+  'metadata': Object, // {map[String, oas_any_type_not_mapped]} Arbitrary JSON metadata for the file
+  'rawAccess': true // {Boolean} Whether or not to allow this file to be accessible from the Web; defaults to false
 };
 
 var callback = function(error, data, response) {
@@ -3446,7 +3465,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-api.upsertFile(file, parentId, name, opts, callback);
+api.upsertFile(file, name, opts, callback);
 </code></pre>
                             </div>
 
@@ -3470,14 +3489,17 @@ namespace Example
             // Create an instance of the API class
             var apiInstance = new IngestApi();
             var file = BINARY_DATA_HERE;  // File |  (default to null)
-            var parentId = 38400000-8cf0-11bd-b23e-10b96e4ef00d;  // UUID |  (default to null)
             var name = name_example;  // String |  (default to null)
             var override = true;  // Boolean |  (optional)  (default to false)
-            var metadata = metadata_example;  // String | JSON string for file metadata (optional)  (default to null)
+            var created = 2013-10-20T19:20:30+01:00;  // Date | Optionally pass the created date. If not provided, will be set at time of upload (optional)  (default to null)
+            var lastModified = 2013-10-20T19:20:30+01:00;  // Date | Optionally pass the last modified date. If not provided, will be set at time of upload (optional)  (default to null)
+            var parentId = 38400000-8cf0-11bd-b23e-10b96e4ef00d;  // UUID | the id of the parent folder, or null for root (optional)  (default to null)
+            var metadata = new map[String, oas_any_type_not_mapped](); // map[String, oas_any_type_not_mapped] | Arbitrary JSON metadata for the file (optional)  (default to null)
+            var rawAccess = true;  // Boolean | Whether or not to allow this file to be accessible from the Web; defaults to false (optional)  (default to false)
 
             try {
                 // Upload or update a file
-                EntryResponse result = apiInstance.upsertFile(file, parentId, name, override, metadata);
+                EntryResponse result = apiInstance.upsertFile(file, name, override, created, lastModified, parentId, metadata, rawAccess);
                 Debug.WriteLine(result);
             } catch (Exception e) {
                 Debug.Print("Exception when calling IngestApi.upsertFile: " + e.Message );
@@ -3495,13 +3517,16 @@ require_once(__DIR__ . '/vendor/autoload.php');
 // Create an instance of the API class
 $api_instance = new OpenAPITools\Client\Api\IngestApi();
 $file = BINARY_DATA_HERE; // File | 
-$parentId = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // UUID | 
 $name = name_example; // String | 
 $override = true; // Boolean | 
-$metadata = metadata_example; // String | JSON string for file metadata
+$created = 2013-10-20T19:20:30+01:00; // Date | Optionally pass the created date. If not provided, will be set at time of upload
+$lastModified = 2013-10-20T19:20:30+01:00; // Date | Optionally pass the last modified date. If not provided, will be set at time of upload
+$parentId = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // UUID | the id of the parent folder, or null for root
+$metadata = Object; // map[String, oas_any_type_not_mapped] | Arbitrary JSON metadata for the file
+$rawAccess = true; // Boolean | Whether or not to allow this file to be accessible from the Web; defaults to false
 
 try {
-    $result = $api_instance->upsertFile($file, $parentId, $name, $override, $metadata);
+    $result = $api_instance->upsertFile($file, $name, $override, $created, $lastModified, $parentId, $metadata, $rawAccess);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling IngestApi->upsertFile: ', $e->getMessage(), PHP_EOL;
@@ -3517,13 +3542,16 @@ use WWW::OPenAPIClient::IngestApi;
 # Create an instance of the API class
 my $api_instance = WWW::OPenAPIClient::IngestApi->new();
 my $file = BINARY_DATA_HERE; # File | 
-my $parentId = 38400000-8cf0-11bd-b23e-10b96e4ef00d; # UUID | 
 my $name = name_example; # String | 
 my $override = true; # Boolean | 
-my $metadata = metadata_example; # String | JSON string for file metadata
+my $created = 2013-10-20T19:20:30+01:00; # Date | Optionally pass the created date. If not provided, will be set at time of upload
+my $lastModified = 2013-10-20T19:20:30+01:00; # Date | Optionally pass the last modified date. If not provided, will be set at time of upload
+my $parentId = 38400000-8cf0-11bd-b23e-10b96e4ef00d; # UUID | the id of the parent folder, or null for root
+my $metadata = Object; # map[String, oas_any_type_not_mapped] | Arbitrary JSON metadata for the file
+my $rawAccess = true; # Boolean | Whether or not to allow this file to be accessible from the Web; defaults to false
 
 eval {
-    my $result = $api_instance->upsertFile(file => $file, parentId => $parentId, name => $name, override => $override, metadata => $metadata);
+    my $result = $api_instance->upsertFile(file => $file, name => $name, override => $override, created => $created, lastModified => $lastModified, parentId => $parentId, metadata => $metadata, rawAccess => $rawAccess);
     print Dumper($result);
 };
 if ($@) {
@@ -3541,14 +3569,17 @@ from pprint import pprint
 # Create an instance of the API class
 api_instance = openapi_client.IngestApi()
 file = BINARY_DATA_HERE # File |  (default to null)
-parentId = 38400000-8cf0-11bd-b23e-10b96e4ef00d # UUID |  (default to null)
 name = name_example # String |  (default to null)
 override = true # Boolean |  (optional) (default to false)
-metadata = metadata_example # String | JSON string for file metadata (optional) (default to null)
+created = 2013-10-20T19:20:30+01:00 # Date | Optionally pass the created date. If not provided, will be set at time of upload (optional) (default to null)
+lastModified = 2013-10-20T19:20:30+01:00 # Date | Optionally pass the last modified date. If not provided, will be set at time of upload (optional) (default to null)
+parentId = 38400000-8cf0-11bd-b23e-10b96e4ef00d # UUID | the id of the parent folder, or null for root (optional) (default to null)
+metadata = Object # map[String, oas_any_type_not_mapped] | Arbitrary JSON metadata for the file (optional) (default to null)
+rawAccess = true # Boolean | Whether or not to allow this file to be accessible from the Web; defaults to false (optional) (default to false)
 
 try:
     # Upload or update a file
-    api_response = api_instance.upsert_file(file, parentId, name, override=override, metadata=metadata)
+    api_response = api_instance.upsert_file(file, name, override=override, created=created, lastModified=lastModified, parentId=parentId, metadata=metadata, rawAccess=rawAccess)
     pprint(api_response)
 except ApiException as e:
     print("Exception when calling IngestApi->upsertFile: %s\n" % e)</code></pre>
@@ -3559,13 +3590,16 @@ except ApiException as e:
 
 pub fn main() {
     let file = BINARY_DATA_HERE; // File
-    let parentId = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // UUID
     let name = name_example; // String
     let override = true; // Boolean
-    let metadata = metadata_example; // String
+    let created = 2013-10-20T19:20:30+01:00; // Date
+    let lastModified = 2013-10-20T19:20:30+01:00; // Date
+    let parentId = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // UUID
+    let metadata = Object; // map[String, oas_any_type_not_mapped]
+    let rawAccess = true; // Boolean
 
     let mut context = IngestApi::Context::default();
-    let result = client.upsertFile(file, parentId, name, override, metadata, &context).wait();
+    let result = client.upsertFile(file, name, override, created, lastModified, parentId, metadata, rawAccess, &context).wait();
 
     println!("{:?}", result);
 }
@@ -3612,7 +3646,53 @@ pub fn main() {
 </td>
 </tr>
 
-                                  <tr><td style="width:150px;">parent_id*</td>
+                                  <tr><td style="width:150px;">created</td>
+<td>
+
+
+    <div id="d2e199_upsertFile_created">
+        <div class="json-schema-view">
+            <div class="primitive">
+                <span class="type">
+                    Date
+                </span>
+                    <span class="format">
+                        (date-time)
+                    </span>
+
+                    <div class="inner description marked">
+Optionally pass the created date. If not provided, will be set at time of upload
+                    </div>
+            </div>
+        </div>
+    </div>
+</td>
+</tr>
+
+                                  <tr><td style="width:150px;">last_modified</td>
+<td>
+
+
+    <div id="d2e199_upsertFile_lastModified">
+        <div class="json-schema-view">
+            <div class="primitive">
+                <span class="type">
+                    Date
+                </span>
+                    <span class="format">
+                        (date-time)
+                    </span>
+
+                    <div class="inner description marked">
+Optionally pass the last modified date. If not provided, will be set at time of upload
+                    </div>
+            </div>
+        </div>
+    </div>
+</td>
+</tr>
+
+                                  <tr><td style="width:150px;">parent_id</td>
 <td>
 
 
@@ -3626,10 +3706,10 @@ pub fn main() {
                         (uuid)
                     </span>
 
+                    <div class="inner description marked">
+the id of the parent folder, or null for root
+                    </div>
             </div>
-                <div class="inner required">
-                    Required
-                </div>
         </div>
     </div>
 </td>
@@ -3663,11 +3743,31 @@ pub fn main() {
         <div class="json-schema-view">
             <div class="primitive">
                 <span class="type">
-                    String
+                    map[String, oas_any_type_not_mapped]
                 </span>
 
                     <div class="inner description marked">
-JSON string for file metadata
+Arbitrary JSON metadata for the file
+                    </div>
+            </div>
+        </div>
+    </div>
+</td>
+</tr>
+
+                                  <tr><td style="width:150px;">raw_access</td>
+<td>
+
+
+    <div id="d2e199_upsertFile_rawAccess">
+        <div class="json-schema-view">
+            <div class="primitive">
+                <span class="type">
+                    Boolean
+                </span>
+
+                    <div class="inner description marked">
+Whether or not to allow this file to be accessible from the Web; defaults to false
                     </div>
             </div>
         </div>

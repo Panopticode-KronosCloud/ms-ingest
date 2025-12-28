@@ -7,6 +7,8 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import java.time.OffsetDateTime;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 import org.openapitools.jackson.nullable.JsonNullable;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -27,7 +29,7 @@ import jakarta.annotation.Generated;
  */
 
 @Schema(name = "EntryResponse", description = "Entry object")
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-12-12T01:30:18.089030221Z[Europe/London]", comments = "Generator version: 7.17.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-12-27T00:58:13.391965702Z[Europe/London]", comments = "Generator version: 7.18.0")
 public class EntryResponse {
 
   private @Nullable UUID id;
@@ -73,17 +75,61 @@ public class EntryResponse {
 
   private @Nullable TypeEnum type;
 
-  private JsonNullable<Integer> size = JsonNullable.<Integer>undefined();
+  private JsonNullable<Long> size = JsonNullable.<Long>undefined();
 
   private JsonNullable<String> mediaType = JsonNullable.<String>undefined();
 
-  private JsonNullable<Object> metadata = JsonNullable.<Object>undefined();
+  @Valid
+  private JsonNullable<Map<String, Object>> metadata = JsonNullable.<Map<String, Object>>undefined();
 
   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
   private @Nullable OffsetDateTime created;
 
   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
   private @Nullable OffsetDateTime lastModified;
+
+  private @Nullable Boolean rawAccess;
+
+  /**
+   * Gets or Sets entryStatus
+   */
+  public enum EntryStatusEnum {
+    UNAVAILABLE("unavailable"),
+    
+    DELETED("deleted"),
+    
+    STAGED("staged"),
+    
+    READY("ready");
+
+    private final String value;
+
+    EntryStatusEnum(String value) {
+      this.value = value;
+    }
+
+    @JsonValue
+    public String getValue() {
+      return value;
+    }
+
+    @Override
+    public String toString() {
+      return String.valueOf(value);
+    }
+
+    @JsonCreator
+    public static EntryStatusEnum fromValue(String value) {
+      for (EntryStatusEnum b : EntryStatusEnum.values()) {
+        if (b.value.equals(value)) {
+          return b;
+        }
+      }
+      throw new IllegalArgumentException("Unexpected value '" + value + "'");
+    }
+  }
+
+  private @Nullable EntryStatusEnum entryStatus;
 
   public EntryResponse id(@Nullable UUID id) {
     this.id = id;
@@ -165,7 +211,7 @@ public class EntryResponse {
     this.type = type;
   }
 
-  public EntryResponse size(Integer size) {
+  public EntryResponse size(Long size) {
     this.size = JsonNullable.of(size);
     return this;
   }
@@ -177,11 +223,11 @@ public class EntryResponse {
   
   @Schema(name = "size", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("size")
-  public JsonNullable<Integer> getSize() {
+  public JsonNullable<Long> getSize() {
     return size;
   }
 
-  public void setSize(JsonNullable<Integer> size) {
+  public void setSize(JsonNullable<Long> size) {
     this.size = size;
   }
 
@@ -205,8 +251,16 @@ public class EntryResponse {
     this.mediaType = mediaType;
   }
 
-  public EntryResponse metadata(Object metadata) {
+  public EntryResponse metadata(Map<String, Object> metadata) {
     this.metadata = JsonNullable.of(metadata);
+    return this;
+  }
+
+  public EntryResponse putMetadataItem(String key, Object metadataItem) {
+    if (this.metadata == null || !this.metadata.isPresent()) {
+      this.metadata = JsonNullable.of(new HashMap<>());
+    }
+    this.metadata.get().put(key, metadataItem);
     return this;
   }
 
@@ -217,11 +271,11 @@ public class EntryResponse {
   
   @Schema(name = "metadata", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("metadata")
-  public JsonNullable<Object> getMetadata() {
+  public JsonNullable<Map<String, Object>> getMetadata() {
     return metadata;
   }
 
-  public void setMetadata(JsonNullable<Object> metadata) {
+  public void setMetadata(JsonNullable<Map<String, Object>> metadata) {
     this.metadata = metadata;
   }
 
@@ -265,6 +319,46 @@ public class EntryResponse {
     this.lastModified = lastModified;
   }
 
+  public EntryResponse rawAccess(@Nullable Boolean rawAccess) {
+    this.rawAccess = rawAccess;
+    return this;
+  }
+
+  /**
+   * Get rawAccess
+   * @return rawAccess
+   */
+  
+  @Schema(name = "raw_access", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("raw_access")
+  public @Nullable Boolean isRawAccess() {
+    return rawAccess;
+  }
+
+  public void setRawAccess(@Nullable Boolean rawAccess) {
+    this.rawAccess = rawAccess;
+  }
+
+  public EntryResponse entryStatus(@Nullable EntryStatusEnum entryStatus) {
+    this.entryStatus = entryStatus;
+    return this;
+  }
+
+  /**
+   * Get entryStatus
+   * @return entryStatus
+   */
+  
+  @Schema(name = "entry_status", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("entry_status")
+  public @Nullable EntryStatusEnum getEntryStatus() {
+    return entryStatus;
+  }
+
+  public void setEntryStatus(@Nullable EntryStatusEnum entryStatus) {
+    this.entryStatus = entryStatus;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -282,7 +376,9 @@ public class EntryResponse {
         equalsNullable(this.mediaType, entryResponse.mediaType) &&
         equalsNullable(this.metadata, entryResponse.metadata) &&
         Objects.equals(this.created, entryResponse.created) &&
-        Objects.equals(this.lastModified, entryResponse.lastModified);
+        Objects.equals(this.lastModified, entryResponse.lastModified) &&
+        Objects.equals(this.rawAccess, entryResponse.rawAccess) &&
+        Objects.equals(this.entryStatus, entryResponse.entryStatus);
   }
 
   private static <T> boolean equalsNullable(JsonNullable<T> a, JsonNullable<T> b) {
@@ -291,7 +387,7 @@ public class EntryResponse {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, name, hashCodeNullable(parentId), type, hashCodeNullable(size), hashCodeNullable(mediaType), hashCodeNullable(metadata), created, lastModified);
+    return Objects.hash(id, name, hashCodeNullable(parentId), type, hashCodeNullable(size), hashCodeNullable(mediaType), hashCodeNullable(metadata), created, lastModified, rawAccess, entryStatus);
   }
 
   private static <T> int hashCodeNullable(JsonNullable<T> a) {
@@ -314,6 +410,8 @@ public class EntryResponse {
     sb.append("    metadata: ").append(toIndentedString(metadata)).append("\n");
     sb.append("    created: ").append(toIndentedString(created)).append("\n");
     sb.append("    lastModified: ").append(toIndentedString(lastModified)).append("\n");
+    sb.append("    rawAccess: ").append(toIndentedString(rawAccess)).append("\n");
+    sb.append("    entryStatus: ").append(toIndentedString(entryStatus)).append("\n");
     sb.append("}");
     return sb.toString();
   }

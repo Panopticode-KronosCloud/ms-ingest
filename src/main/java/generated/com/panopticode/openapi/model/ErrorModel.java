@@ -20,7 +20,7 @@ import jakarta.annotation.Generated;
  */
 
 @Schema(name = "ErrorModel", description = "Generic error")
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-12-12T01:30:18.089030221Z[Europe/London]", comments = "Generator version: 7.17.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-12-27T00:58:13.391965702Z[Europe/London]", comments = "Generator version: 7.18.0")
 public class ErrorModel {
 
   private Integer code;

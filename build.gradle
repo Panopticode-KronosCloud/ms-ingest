@@ -15,7 +15,7 @@ plugins {
 	id 'jacoco'
 	id 'org.springframework.boot' version "$springVersion"
 	id 'io.spring.dependency-management' version '1.1.7'
-	id 'org.openapi.generator' version '7.17.0'
+	id 'org.openapi.generator' version '7.18.0'
 	id 'com.github.spotbugs' version '6.1.6'
 }
 
@@ -55,6 +55,7 @@ dependencies {
 
 	// Spring
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 
 	// Additional dependencies for OpenAPI
 	implementation 'org.openapitools:jackson-databind-nullable:0.2.6'
@@ -234,7 +235,7 @@ tasks.named('check') {
 }
 
 openApiValidate {
-	inputSpec.set("$projectDir/api/openapi.yaml")
+	inputSpec.set("$projectDir/api/src/openapi.yaml")
 	recommend.set(true)
 }
 
@@ -246,8 +247,8 @@ openApiGenerate {
 	verbose.set(true)
 	generatorName.set('spring')
 	outputDir.set("$projectDir")
-	inputSpecRootDirectory.set("$projectDir/build/openapi")
-	inputSpec.set("$projectDir/build/openapi/openapi.yaml")
+	inputSpecRootDirectory.set("$projectDir/api/dist")
+	inputSpec.set("$projectDir/api/dist/openapi.yaml")
 	invokerPackage.set('com.panopticode.openapi')
 	apiPackage.set('com.panopticode.openapi.api')
 	modelPackage.set('com.panopticode.openapi.model')
@@ -275,7 +276,7 @@ tasks.register('generateDocs', GenerateTask) {
 	dependsOn bundleApiSpecs
 	generatorName.set('html2')
 	outputDir.set("$projectDir/docs")
-	inputSpec.set("$projectDir/build/openapi/openapi.yaml")
+	inputSpec.set("$projectDir/api/dist/openapi.yaml")
 	configOptions = [
 			appName        : 'ingest-microservice',
 			appDescription : 'A template code base for a java Spring Boot micro-service, with database versioning, a RESTful API defined and documented using OpenAPI and a compelling test suite.',
