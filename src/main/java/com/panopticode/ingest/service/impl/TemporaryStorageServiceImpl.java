@@ -16,18 +16,30 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.panopticode.ingest.exception;
+package com.panopticode.ingest.service.impl;
 
+import com.panopticode.ingest.service.TemporaryStorageService;
+
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+
+import java.io.InputStream;
 import java.util.UUID;
 
 /**
- * Base exception for entities not found.
+ * TemporaryStorageService service is a wrapper interface to Citadel,
+ * the temporary blob storage.
  */
-public class EntityNotFoundException
-    extends BaseAppRuntimeException
+@Service
+@Slf4j
+public class TemporaryStorageServiceImpl implements TemporaryStorageService
 {
-    public EntityNotFoundException(String entityName, UUID id)
+    public TemporaryStorageServiceImpl()
+    { }
+
+    @Override
+    public void store(final InputStream inputStream, final UUID uuid)
     {
-        super("{} with id {} does not exist", entityName, id);
+        log.warn("TBS store not implemented yet!");
     }
 }

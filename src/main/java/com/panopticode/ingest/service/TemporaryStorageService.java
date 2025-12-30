@@ -16,18 +16,21 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.panopticode.ingest.exception;
+package com.panopticode.ingest.service;
 
+import java.io.InputStream;
 import java.util.UUID;
 
 /**
- * Base exception for entities not found.
+ * Short-term storage service.
  */
-public class EntityNotFoundException
-    extends BaseAppRuntimeException
+public interface TemporaryStorageService
 {
-    public EntityNotFoundException(String entityName, UUID id)
-    {
-        super("{} with id {} does not exist", entityName, id);
-    }
+    /**
+     * Store content in the short-term storage.
+     *
+     * @param inputStream the content as a stream of bytes
+     * @param uuid the unique ID to use to identify the content in future calls
+     */
+    void store(InputStream inputStream, UUID uuid);
 }

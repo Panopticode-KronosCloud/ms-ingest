@@ -16,18 +16,25 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.panopticode.ingest.exception;
+package com.panopticode.ingest.config;
 
-import java.util.UUID;
+import com.fasterxml.jackson.databind.Module;
+import org.openapitools.jackson.nullable.JsonNullableModule;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 /**
- * Base exception for entities not found.
+ * Generic configuration for this web application.
  */
-public class EntityNotFoundException
-    extends BaseAppRuntimeException
+@Configuration
+public class Config
 {
-    public EntityNotFoundException(String entityName, UUID id)
+    Config()
+    { }
+
+    @Bean
+    public Module jsonNullableModule()
     {
-        super("{} with id {} does not exist", entityName, id);
+        return new JsonNullableModule();
     }
 }

@@ -20,6 +20,7 @@ package com.panopticode.ingest.controller;
 
 import com.panopticode.ingest.exception.BaseAppRuntimeException;
 import com.panopticode.ingest.exception.DataLayerException;
+import com.panopticode.ingest.exception.EntityNotFoundException;
 import com.panopticode.ingest.exception.ValidationException;
 import com.panopticode.openapi.model.ErrorModel;
 
@@ -41,7 +42,7 @@ public class RestResponseEntityExceptionHandler
     extends ResponseEntityExceptionHandler
 {
     private static final String X_APPLICATION_NAME = "X-Application-Name";
-    private static final String APPLICATION_NAME = "Base Webapp";
+    private static final String APPLICATION_NAME = "ingest-microservice";
 
     public RestResponseEntityExceptionHandler()
     { }
@@ -62,6 +63,15 @@ public class RestResponseEntityExceptionHandler
         log.warn("Handling ValidationException exception back to client {}", request, ex);
         return handleExceptionInternal(ex, bodyOfResponse,
                 _httpHeaders(), HttpStatus.BAD_REQUEST, request);
+    }
+
+    @ExceptionHandler(value = EntityNotFoundException.class)
+    protected ResponseEntity<Object> handleEntityNotFoundException(RuntimeException ex, WebRequest request)
+    {
+        final var bodyOfResponse = new ErrorModel(HttpStatus.NOT_FOUND.value(), ex.getMessage());
+        log.warn("Handling EntityNotFoundException exception back to client {}", request, ex);
+        return handleExceptionInternal(ex, bodyOfResponse,
+                _httpHeaders(), HttpStatus.NOT_FOUND, request);
     }
 
     /**

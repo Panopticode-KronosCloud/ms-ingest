@@ -16,18 +16,41 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.panopticode.ingest.exception;
+package com.panopticode.ingest.entity;
 
-import java.util.UUID;
+import lombok.Getter;
 
 /**
- * Base exception for entities not found.
+ * Type of entry (file, directory, symlink etc...).
  */
-public class EntityNotFoundException
-    extends BaseAppRuntimeException
+@Getter
+public enum EntryType
 {
-    public EntityNotFoundException(String entityName, UUID id)
+    FILE("file"),
+    DIRECTORY("directory");
+
+    private final String _value;
+
+    EntryType(final String value)
     {
-        super("{} with id {} does not exist", entityName, id);
+        this._value = value;
+    }
+
+    @Override
+    public String toString()
+    {
+        return get_value();
+    }
+
+    public static EntryType fromValue(String value)
+    {
+        for (var b : EntryType.values())
+        {
+            if (b._value.equals(value))
+            {
+                return b;
+            }
+        }
+        throw new IllegalArgumentException("Unexpected value '" + value + "'");
     }
 }

@@ -4,19 +4,39 @@ content:
   multipart/form-data:
     schema:
       type: object
+      encoding:
+        metadata:
+          contentType: application/json
       properties:
         file:
           type: string
           format: binary
+        created:
+          description: Optionally pass the created date. If not provided, will be set at time of upload
+          type: string
+          format: date-time
+        last_modified:
+          description: Optionally pass the last modified date. If not provided, will be set at time of upload
+          type: string
+          format: date-time
         parent_id:
+          description: the id of the parent folder, or null for root
           type: string
           format: uuid
+          nullable: true
         name:
           type: string
         metadata:
-          type: string
-          description: JSON string for file metadata
+          description: Arbitrary JSON metadata for the file
+          type: object
+          additionalProperties: true
+          example:
+            owner: bar
+            custom_field1: foo
+        raw_access:
+          description: Whether or not to allow this file to be accessible from the Web; defaults to false
+          type: boolean
+          default: false
       required:
         - file
-        - parent_id
         - name

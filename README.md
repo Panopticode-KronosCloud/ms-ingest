@@ -10,9 +10,16 @@ The API specification is in the `api` folder and follows the OpenAPI v3 model. C
 the OpenAPI engine. When changing the API spec, regenerate the API entities with
 
 ```shell
+rm api/dist/*
 rm -rf src/main/java/generated/com/panopticode/openapi
 ./gradlew openApiGenerate
 ```
+
+> [!WARNING]
+> Because of a bug on the OpenAPI generator, the `com.panopticode.openapi.api.IngestApi#upsertFile` method must
+> be updated by replacing `@RequestParam` with `@RequestPart` for at least the `metadata` attribute.
+> This is overly annoying, but it's the least bad solution I can think of. Bug is tracked
+> [here](https://github.com/OpenAPITools/openapi-generator/issues/12498)
 
 #### OpenAPI Contract
 

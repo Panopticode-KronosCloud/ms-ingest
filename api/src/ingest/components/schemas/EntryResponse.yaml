@@ -17,12 +17,14 @@ properties:
       - directory
   size:
     type: integer
+    format: int64
     nullable: true
   media_type:
     type: string
     nullable: true
   metadata:
     type: object
+    additionalProperties: true
     nullable: true
   created:
     type: string
@@ -30,3 +32,12 @@ properties:
   last_modified:
     type: string
     format: date-time
+  raw_access:
+    type: boolean
+  entry_status:
+    type: string
+    enum:
+      - unavailable
+      - deleted
+      - staged
+      - ready

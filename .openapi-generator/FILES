@@ -1,6 +1,7 @@
 src/main/java/generated/com/panopticode/openapi/RFC3339DateFormat.java
 src/main/java/generated/com/panopticode/openapi/api/ApiUtil.java
 src/main/java/generated/com/panopticode/openapi/api/IngestApi.java
+src/main/java/generated/com/panopticode/openapi/api/IngestApiController.java
 src/main/java/generated/com/panopticode/openapi/api/IngestApiDelegate.java
 src/main/java/generated/com/panopticode/openapi/configuration/HomeController.java
 src/main/java/generated/com/panopticode/openapi/configuration/SpringDocConfiguration.java

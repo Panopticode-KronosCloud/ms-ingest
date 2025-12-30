@@ -16,18 +16,27 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.panopticode.ingest.exception;
+package com.panopticode.ingest.service;
 
+import com.panopticode.ingest.entity.FilesystemEntry;
+
+import java.io.InputStream;
 import java.util.UUID;
 
 /**
- * Base exception for entities not found.
+ * Ingest service is the gateway to the storage system.
  */
-public class EntityNotFoundException
-    extends BaseAppRuntimeException
+public interface IngestService
 {
-    public EntityNotFoundException(String entityName, UUID id)
-    {
-        super("{} with id {} does not exist", entityName, id);
-    }
+    /**
+     * Create or update filesystem entry.
+     * <p/>
+     * The implementing method should synchronously return as quick as possible.
+     *
+     * @param inputStream the content byte stream
+     * @param filesystemEntry Metadata object related to the content
+     * @param override if set to false and content exists, throw an error. Ignored for new content.
+     * @return the unique id associated with the staged content
+     */
+    UUID ingest(InputStream inputStream, FilesystemEntry filesystemEntry, boolean override);
 }

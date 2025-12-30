@@ -1,10 +1,12 @@
 package com.panopticode.openapi.api;
 
 import com.panopticode.openapi.model.CreateNewFolderRequest;
+import org.springframework.format.annotation.DateTimeFormat;
 import com.panopticode.openapi.model.EntryResponse;
 import com.panopticode.openapi.model.ErrorModel;
 import com.panopticode.openapi.model.MoveEntryRequest;
 import org.springframework.lang.Nullable;
+import java.time.OffsetDateTime;
 import java.util.UUID;
 import com.panopticode.openapi.model.UpdateEntryMetadataRequest;
 
@@ -31,9 +33,9 @@ import java.util.Map;
 import java.util.Optional;
 import jakarta.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-12-12T00:06:07.690644653Z[Europe/London]", comments = "Generator version: 7.17.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-12-27T00:58:13.391965702Z[Europe/London]", comments = "Generator version: 7.18.0")
 @Controller
-@RequestMapping("${openapi.ingest-microservice_OpenAPI.base-path:}")
+@RequestMapping("${openapi.ingest-microservice_OpenAPI.base-path:/api/v1/ingest}")
 public class IngestApiController implements IngestApi {
 
     private final IngestApiDelegate delegate;
